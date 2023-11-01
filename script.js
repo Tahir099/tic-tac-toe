@@ -9,6 +9,26 @@ let player = "X";
 let board = [];
 let gameOver = false;
 
+resetBtn.addEventListener("click", function () {
+    while (gameContainer.firstChild) {
+        gameContainer.removeChild(gameContainer.firstChild);
+    }
+
+    board = [];
+    gameOver = false;
+    player = "X";
+    displayPlayer.textContent = "Player " + player;
+    winner.textContent = "";
+
+    const boardSize = parseInt(countInput.value, 10);
+    if (!isNaN(boardSize) && boardSize > 0) {
+        initialGameArea(boardSize);
+    } else {
+        alert("Geçerli bir board boyutu seçin");
+    }
+});
+
+
 displayPlayer.textContent = "player " + player;
 function initializeBoard(boardSize) {
     for (let row = 0; row < boardSize; row++) {
@@ -52,21 +72,42 @@ function initialGameArea(size) {
             const row = document.createElement("div");
             row.classList.add("row");
             row.style.height = (100 / 3) + "%";
-            row.addEventListener("click", () => {
-                displayPlayer.textContent = "player " + player;
-                if (row.textContent === "" && !gameOver) {
-                    board[j][i] = (player === "X") ? "X" : "0";
-                    console.table(board)
-                    row.textContent = player;
-                    checkWinner(size, i, j, player);
-                    player = (player === "X") ? "0" : "X";
-                }
-            });
+            row.addEventListener("click", cellClickHandler(row , j , i ,size));
             column.appendChild(row);
         }
         gameContainer.appendChild(column);
     }
 }
+
+function cellClickHandler(row, j, i, size) {
+    displayPlayer.textContent = "player " + player;
+    if (row.textContent === "" && !gameOver) {
+        board[j][i] = (player === "X") ? "X" : "0";
+        console.table(board);
+        checkWinner(size, i, j, player);
+        row.textContent = board[j][i];
+        player = (player === "X") ? "0" : "X";
+    }
+}
+
+function initialGameArea(size) {
+    initializeBoard(size);
+    for (let i = 0; i < size; i++) {
+        const column = document.createElement("div");
+        column.classList.add("column");
+        column.style.width = (100 / 3) + "%";
+        for (let j = 0; j < size; j++) {
+            const row = document.createElement("div");
+            row.classList.add("row");
+            row.style.height = (100 / 3) + "%";
+            row.addEventListener("click", () => cellClickHandler(row, j, i, size));
+            column.appendChild(row);
+        }
+        gameContainer.appendChild(column);
+    }
+}
+
+
 
 function checkWinner(boardSize, positionX, positionY, player) {
     let columnCount = 0;
