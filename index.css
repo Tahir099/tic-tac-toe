@@ -1,0 +1,54 @@
+.gameArea{
+    gap: 15px;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.gameContainer{
+    display: flex;
+    width: 35%;
+    height: 70%;
+}
+
+.column{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 1px solid bl;
+}
+
+.row{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: red;
+    font-size: 65px;
+    width: 100%;
+    border: 1px solid black;
+}
+
+.button{
+    background-color: white;
+}
+
+
+.countInput{
+    height: 25px;
+}
+
+.createBtn{
+    height: 25px;
+}
+
+.player{
+    margin-left: 25px;
+}
+
+.countInputContainer{
+    gap: 10px;
+    display: flex;
+}
